@@ -7,7 +7,10 @@ import Houses from './Houses'
 import Navbar from './Navbar'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+// Create QueryClient OUTSIDE component to prevent recreation on re-renders
 const queryClient = new QueryClient();
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
