@@ -2,15 +2,21 @@
 import { useQuery } from '@tanstack/react-query'
 import HouseCard from './HouseCard'
 
+/**
+ * Houses component displays all Hogwarts houses
+ * Uses React Query for data fetching and caching
+ */
 function Houses() {
+    // useQuery hook for fetching and caching houses data
     const {data, error, isLoading} = useQuery({
-        queryKey: ["houses"],
+        queryKey: ["houses"], // Unique key for this query
         queryFn: () => fetch("https://potterapi-fedeperin.vercel.app/en/houses/")
         .then(res => res.json()),
-        staleTime: 1000*60*5, 
-        gcTime: 1000*60*10, 
+        staleTime: 1000*60*5,  // Data stays fresh for 5 minutes
+        gcTime: 1000*60*10,    // Cache persists for 10 minutes
     })
 
+  // Show loading state
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -27,6 +33,7 @@ function Houses() {
     );
   }
 
+  // Render houses grid
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
@@ -34,9 +41,10 @@ function Houses() {
           🏰 Hogwarts Houses
         </h1>
 
+        {/* Grid of house cards */}
         <div className="flex flex-wrap justify-center gap-4">
-          {data?.map((house, index) => (
-            <HouseCard key={index} house={house} />
+          {data?.map((house) => (
+            <HouseCard key={house.house} house={house} />
           ))}
         </div>
       </div>

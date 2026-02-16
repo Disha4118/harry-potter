@@ -3,14 +3,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchBooks } from './utils/Slice'
 import Card from './card'
 
+/**
+ * Books component displays all Harry Potter books
+ * Uses Redux for state management
+ */
 function Books() {
+  // useDispatch hook to dispatch Redux actions
   const dispatch = useDispatch()
+  // useSelector hook to access Redux state
   const { books, loading, error } = useSelector((state) => state.books)
 
+  // Fetch books when component mounts
   useEffect(() => {
     dispatch(fetchBooks())
   }, [dispatch])
 
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -19,6 +27,7 @@ function Books() {
     )
   }
 
+  // Show error state
   if (error) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -27,6 +36,7 @@ function Books() {
     )
   }
 
+  // Render books grid
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
@@ -34,9 +44,10 @@ function Books() {
            Harry Potter Books
         </h1>
         
+        {/* Grid of book cards */}
         <div className="flex flex-wrap justify-center gap-4">
-          {books.map((book, index) => (
-            <Card key={index} book={book} />
+          {books.map((book) => (
+            <Card key={book.title} book={book} />
           ))}
         </div>
       </div>
